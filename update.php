@@ -1,17 +1,20 @@
 <?php 
     session_start();
+    
     require_once("./helper/helper.php");
 
     $conn = ConnectDatabase("todoapp");
 
-    $id = $_GET["id"];
+    $_SESSION["id"] = $_GET["id"];
+    $id = $_SESSION["id"];
+    
     $sql = "SELECT * FROM `tasks`  WHERE `id` = '$id' ";
     $result = mysqli_query($conn,$sql);
     $row = mysqli_fetch_assoc($result);
     if(!$row){
-        $errors[] = "data not exists !";
+        $errors[] = "Data not exists !";
         $_SESSION['errors'] = $errors;
-        redirect("./update.php?id=$id");
+        redirect("./index.php?id=$id");
         exit;
     }
 

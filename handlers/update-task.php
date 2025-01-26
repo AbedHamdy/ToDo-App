@@ -4,7 +4,20 @@
     require_once("../helper/helper.php");
 
     $errors = [];
+    
+    $idFact = $_SESSION["id"];    
+
     $id = $_GET["id"];
+
+    if($idFact != $id)
+    {
+        $errors[] = "Don't play with URL";
+        $_SESSION["errors"] = $errors;
+        redirect("../update.php?id=$idFact");
+        exit;
+    }
+
+    
     if(CheckRequestMethod("POST"))
     {
         $title = sanitizeInput($_POST["title"]);
